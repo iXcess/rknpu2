@@ -1,3 +1,13 @@
+# Introduction
+This example is to evaluate the performance of dmonitoring_model.onnx from openpilot on an RK3588 platform's dedicated NPU Cores.
+
+Done:
+1. To inference a static image using NPU on RK3588. 
+
+Future to-do:
+1. To be able to stream video from USB camera or dedicated RK3588 CSI camera for inferencing
+2. To evaluate the inference speed of the dmonitoring_model.onnx between quantised and non-quantised.
+
 The following <TARGET_PLATFORM> represents RK356X or RK3588.
 
 # Aarch64 Linux Demo
@@ -14,15 +24,7 @@ then execute
 
 ## *Install*
 
-Copy install/rknn_mobilenet_demo_Linux  to the devices under /userdata/.
-
-- If you use rockchip's evb board, you can use the following way:
-
-Connect device and push the program and rknn model to `/userdata`
-
-```
-adb push install/rknn_mobilenet_demo_Linux /userdata/
-```
+Copy install/dmonitoring_Linux to the devices under /userdata/.
 
 - If your board has sshd service, you can use scp or other methods to copy the program and rknn model to the board.
 
@@ -30,40 +32,11 @@ adb push install/rknn_mobilenet_demo_Linux /userdata/
 
 ```
 adb shell
-cd /userdata/rknn_mobilenet_demo_Linux/
+cd /userdata/dmonitoring_Linux/
 ```
 
 ```
 export LD_LIBRARY_PATH=./lib
-./rknn_mobilenet_demo model/<TARGET_PLATFORM>/mobilenet_v1.rknn model/dog_224x224.jpg
+sudo ./dmonitoring model/<TARGET_PLATFORM>/dmonitoring_model.rknn model/ecam.jpeg
 ```
 
-# Android Demo
-
-## Build
-
-modify `ANDROID_NDK_PATH` on `build-android_<TARGET_PLATFORM>.sh` for target platform, then execute
-
-```
-./build-android_<TARGET_PLATFORM>.sh
-```
-
-## Install
-
-connect device and push build output into `/data`
-
-```
-adb push install/rknn_mobilenet_demo_Android /data/
-```
-
-## Run
-
-```
-adb shell
-cd /data/rknn_mobilenet_demo_Android/
-```
-
-```
-export LD_LIBRARY_PATH=./lib
-./rknn_mobilenet_demo model/<TARGET_PLATFORM>/mobilenet_v1.rknn model/dog_224x224.jpg
-```
